@@ -36,6 +36,10 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
     setEdit(false)
   }
 
+  const handleMouseOver = (setState: React.Dispatch<React.SetStateAction<boolean>>) => setState(true)
+
+  const handleMouseLeave = (setState: React.Dispatch<React.SetStateAction<boolean>>) => setState(false)
+
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -78,19 +82,41 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
                     setEdit(!edit)
                   }
                 }}>
-                <AiFillEdit />
+
+                <div className={styles.tooltip} >
+                  <span >
+                    <AiFillEdit />
+                  </span>
+                  <span className={styles.tooltiptext}>
+                    Edit
+                  </span>
+                </div>
+
               </span>
-              <span className={styles.icon} onClick={() => handleDelete(todo.id)}>
-                <AiFillDelete />
-              </span>
-              <span className={styles.icon} onClick={() => handleDone(todo.id)}>
-                <MdDone />
-              </span>
+
+              <div className={styles.tooltip} >
+                <span className={styles.icon} onClick={() => handleDelete(todo.id)}
+                >
+                  <AiFillDelete />
+                </span>
+                <span className={styles.tooltiptext}>
+                  Delete
+                </span>
+              </div>
+
+              <div className={styles.tooltip} >
+                <span className={styles.icon} onClick={() => handleDone(todo.id)}>
+                  <MdDone />
+                </span>
+                <span className={styles.tooltiptext}>
+                  Done
+                </span>
+              </div>
             </div>
           </form >
         )
       }
-    </Draggable>
+    </Draggable >
   )
 }
 
