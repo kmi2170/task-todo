@@ -8,17 +8,30 @@ import { Todo } from "../api/types";
 
 import styles from '../../styles/Home.module.css'
 
+const getInitFromLocalStorage = (key: string) => {
+  if (typeof window !== "undefined") {
+    const items = localStorage.getItem(key)
+
+    return items ? JSON.parse(items) : []
+  } else {
+    return []
+  }
+}
 
 const Home: NextPage = () => {
   const [todo, setTodo] = useState<string>("")
-  const [todos, setTodos] = useState<Todo[]>([])
-  const [completedTodos, setCompletedTodos] = useState<Todo[]>([])
+  const [todos, setTodos] = useState<Todo[]>(getInitFromLocalStorage("todos"))
+  const [completedTodos, setCompletedTodos] = useState<Todo[]>(getInitFromLocalStorage("completedTodos"))
+  // const [completedTodos, setCompletedTodos] = useState<Todo[]>([])
+  // const [todos, setTodos] = useState<Todo[]>([])
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault()
 
     if (todo) {
-      setTodos([...todos, { id: Date.now(), todo, isDone: false }])
+      const newTodos = [...todos, { id: Date.now(), todo, isDone: false }]
+      setTodos(newTodos)
+      localStorage.setItem("todos", JSON.stringify(newTodos))
       setTodo("")
     }
   }
@@ -51,6 +64,8 @@ const Home: NextPage = () => {
 
     setCompletedTodos(complete)
     setTodos(active)
+    localStorage.setItem("completedTodos", JSON.stringify(complete))
+    localStorage.setItem("todos", JSON.stringify(active))
   }
 
 
