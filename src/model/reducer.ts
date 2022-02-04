@@ -1,3 +1,4 @@
+// example of reducer
 import { useReducer } from "react";
 import { Todo } from "../api/types";
 
@@ -22,11 +23,5 @@ const TodoReducer = (state: Todo[], action: Actions) => {
 }
 
 const reducer = () => {
-
   const [state, dispatch] = useReducer(TodoReducer, [])
-
-  return (
-    <div></div>
-  )
-
 }
